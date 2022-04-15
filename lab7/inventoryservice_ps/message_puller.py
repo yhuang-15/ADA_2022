@@ -28,15 +28,33 @@ class Callable:
             publish_message(project=self.project, topic="inventory_status", message=data, event_type="StockAvailable")
         message.ack()
 
+    
+    def callback_ex(self, message):
+        logging.info(f"Received {message.data}.")
+        data = json.loads(message.data.decode("utf-8"))
+        quantity_before = self.product.get_quantity(data["product_type"])
+        updated_produce = self.product.put(data["product_type"], data['quantity'])
+        updated_produce['old_quantity'] = quantity_before
+        
+        data = json.dumps(updated_produce).encode("utf-8")
+        publish_message(project=self.project, topic="inventory_status", message=data, event_type="InventoryUpdated")
+        message.ack()
+
 
 def pull_message(project, subscription, product):
     subscriber = pubsub_v1.SubscriberClient()
     subscription_path = subscriber.subscription_path(project, subscription)
 
-    streaming_pull_future = subscriber.subscribe(
-        subscription_path, callback=Callable(product=product, project=project).callback,
-        await_callbacks_on_shutdown=True,
-    )
+    if "order_req_sub" in subscription:
+        streaming_pull_future = subscriber.subscribe(
+            subscription_path, callback=Callable(product=product, project=project).callback,
+            await_callbacks_on_shutdown=True,
+        )
+    elif "order_status_sub" in subscription:
+        streaming_pull_future = subscriber.subscribe(
+            subscription_path, callback=Callable(product=product, project=project).callback_ex,
+            await_callbacks_on_shutdown=True,
+        )
     logging.info(f"Listening for messages on {subscription_path}..\n")
 
     # Wrap subscriber in a 'with' block to automatically call close() when done.

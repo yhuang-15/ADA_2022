@@ -15,27 +15,9 @@ project_id = os.environ['project_id']
 create_topic(project=project_id, topic="order_req")
 create_subscription(project=project_id, topic="order_req", subscription="order_req_sub")
 create_topic(project=project_id, topic="inventory_status")
+create_topic(project=project_id, topic="order_status")
+create_subscription(project=project_id, topic="order_status", subscription="order_status_sub")
 MessagePuller(project=project_id, subscription="order_req_sub", product=product)
-
-
-@app.route('/products/', methods=['POST'])
-def create_products():
-    return products.post(request)
-
-
-@app.route('/qproducts', methods=['POST'])
-def create_products_from_query():
-    return products.post_query(request)
-
-
-@app.route('/products/<string:pname>', methods=['GET'])
-def get_product_stock(pname):
-    return product.get(pname)
-
-
-@app.route('/products/<string:pname>/quantity', methods=['PUT'])
-def update_product_stock(pname):
-    return product.put(pname, int(request.args.get('value')))
-
+MessagePuller(project=project_id, subscription="order_status_sub", product=product)
 
 app.run(host='0.0.0.0', port=5000, debug=True)
