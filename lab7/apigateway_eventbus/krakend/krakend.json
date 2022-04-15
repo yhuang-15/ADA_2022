@@ -1,5 +1,4 @@
 {
-  "$schema": "http://www.krakend.io/schema/v3.json",
   "version": 3,
   "output_encoding": "json",
   "name": "lab7APIex",
@@ -14,7 +13,7 @@
           "host": ["gcppubsub://"],
           "disable_host_sanitize": true,
           "extra_config": {
-            "backend/pubsub/subscriber": {
+            "backend/pubsub/publisher": {
               "topic_url": "projects/jads-de-2021/topics/order_req"
               }
           }
