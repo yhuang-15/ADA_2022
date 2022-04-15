@@ -28,7 +28,7 @@ class Product:
         for record in inventories:
             if pname == record["name"]:
                 record["quantity"] = record["quantity"] - value
-                return jsonify(record), 200
+                return record["quantity"]
         return jsonify({"message": "No product for " + pname}), 404
 
 

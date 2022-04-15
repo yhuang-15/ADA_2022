@@ -32,11 +32,10 @@ class Callable:
     def callback_ex(self, message):
         logging.info(f"Received {message.data}.")
         data = json.loads(message.data.decode("utf-8"))
-        quantity_before = self.product.get_quantity(data["product_type"])
-        updated_produce = self.product.put(data["product_type"], data['quantity'])
-        updated_produce['old_quantity'] = quantity_before
+        quantity_updated = self.product.put(data["product_type"], data['quantity'])
+        data['updated_quantity'] = quantity_updated
         
-        data = json.dumps(updated_produce).encode("utf-8")
+        data = json.dumps(data).encode("utf-8")
         publish_message(project=self.project, topic="inventory_status", message=data, event_type="InventoryUpdated")
         message.ack()
 
