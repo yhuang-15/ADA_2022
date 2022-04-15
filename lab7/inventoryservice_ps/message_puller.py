@@ -15,7 +15,7 @@ class Callable:
 
     def callback(self, message):
         event_type = message.attributes.get('event_type')
-        logging.info(f"Received {message.data} \n{event_type}.")
+        logging.info(f"Received {message.data} {event_type}.")
         
         data = json.loads(message.data.decode("utf-8"))
         quantityAva = self.product.get_quantity(data["product_type"])
@@ -33,8 +33,8 @@ class Callable:
     
     def callback_ex(self, message):
         event_type = message.attributes.get('event_type')
-        logging.info(f"Received {message.data} \n{event_type}.")
-        
+        logging.info(f"Received {message.data} {event_type}.")
+
         data = json.loads(message.data.decode("utf-8"))
         quantity_updated = self.product.put(data["product_type"], data['quantity'])
         data['updated_quantity'] = quantity_updated
