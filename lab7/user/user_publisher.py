@@ -34,7 +34,7 @@ if __name__ == '__main__':
     create_topic("jads-de-2021", "order_req")  # make sure to change the project id - i.e., ada2022-341617
     data = {
         "product_type": "Phone",
-        "quantity": 50,
+        "quantity": 900,
         "unit_price": 232.00
     }
     data = json.dumps(data).encode("utf-8")
