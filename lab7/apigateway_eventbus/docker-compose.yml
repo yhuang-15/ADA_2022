@@ -15,7 +15,7 @@ services:
       context: ./../inventoryservice_ps
     container_name: inventoryservice_ps_ct
     environment:
-      - project_id=ada2022-341617
+      - project_id=jads-de-2021
     ports:
       - "5000:5000"      
   orderrecordservice_ps:
@@ -23,6 +23,6 @@ services:
       context: ./../orderrecordservice_ps
     container_name: orderrecordservice_ps_ct
     environment:
-      - project_id=ada2022-341617    
+      - project_id=jads-de-2021   
     ports:
       - "5001:5000"
