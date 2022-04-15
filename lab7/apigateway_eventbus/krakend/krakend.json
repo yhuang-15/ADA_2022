@@ -31,7 +31,7 @@
           "disable_host_sanitize": true,
           "extra_config": {
             "backend/pubsub/subscriber": {
-              "subscription_url": "projects/jads-de-2021/subscriptions/order_status_user"
+              "subscription_url": "projects/jads-de-2021/subscriptions/order_status_user_sub"
               }
           }
         }
