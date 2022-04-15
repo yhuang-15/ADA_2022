@@ -24,6 +24,7 @@
       "endpoint": "/orders",
       "method": "GET",
       "output_encoding": "json",
+      "timeout": "20000ms",
       "backend": [
         {
           "host": ["gcppubsub://"],

@@ -1,5 +1,6 @@
 import json
 import logging
+from time import sleep
 
 from google.cloud import pubsub_v1
 
@@ -34,8 +35,10 @@ if __name__ == '__main__':
     create_topic("jads-de-2021", "order_req")  # make sure to change the project id - i.e., ada2022-341617
     data = {
         "product_type": "Phone",
-        "quantity": 300,
+        "quantity": 3,
         "unit_price": 232.00
     }
     data = json.dumps(data).encode("utf-8")
-    publish_message("jads-de-2021", "order_req", data)
+    for i in range(10):
+        publish_message("jads-de-2021", "order_req", data)
+        sleep(5)
